@@ -37,7 +37,7 @@
 			<td><input type="text" name="memail" size="60"></td>
 		</tr>
 		<tr height="40">
-			<td colspan="2">
+			<td colspan="2" align="right">
 				<input type="submit" value="완료"><input type="reset" value="취소">
 			</td>
 		</tr>

@@ -1,6 +1,7 @@
 package com.lkhpractice.mbtsboard.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +23,14 @@ public class BoardController {
 		return "joinMember";
 	}
 	
-	@RequestMapping(value = "joinOk", method = RequestMethod.POST)
+	@RequestMapping(value = "/joinOk", method = RequestMethod.POST)
 	public String joinOk(HttpServletRequest request, Model model) {
 		
 		IDao dao = sqlSession.getMapper(IDao.class);
 		
 		int checkId = dao.checkIdDao(request.getParameter("mid"));
 		
-		if(checkId == 0) {
+		if(checkId == 0) {		
 			dao.joinMemberDao(request.getParameter("mid"), request.getParameter("mpw"), request.getParameter("mname"), request.getParameter("memail"));
 			model.addAttribute("memberName", request.getParameter("mname"));
 			model.addAttribute("checkIdFlag", "joinOk");
@@ -50,6 +51,43 @@ public class BoardController {
 		model.addAttribute("checkIdFlag", checkIdFlag);
 		
 		return "joinOk";
+	}
+	
+	@RequestMapping(value = "/login")
+	public String login() {
+		return "login";
+	}
+	
+	@RequestMapping(value = "/loginOk", method = RequestMethod.POST)
+	public String loginOk(HttpServletRequest request, Model model, HttpSession session) {
+		
+		String mid = request.getParameter("mid");
+		String mpw = request.getParameter("mpw");
+		
+		IDao dao = sqlSession.getMapper(IDao.class);
+		
+		int checkIdFlag = dao.checkIdDao(mid);
+		
+		model.addAttribute("checkIdFlag", checkIdFlag);
+		
+		int checkIdPwFlag = dao.checkIdPwDao(mid, mpw);
+		
+		model.addAttribute("checkIdPwFlag", checkIdPwFlag);
+		
+		if(checkIdPwFlag == 1) {	// 로그인 성공
+//			HttpSession session = request.getSession();	// 컨트롤러에서 세션 객체 가져오기
+			session.setAttribute("memberId", mid);
+		}
+		
+		return "loginOk";
+	}
+	
+	@RequestMapping(value = "/logout")
+	public String logout(HttpSession session) {
+		
+		session.invalidate(); // 모든 세션 삭제
+		
+		return "login";
 	}
 	
 }
