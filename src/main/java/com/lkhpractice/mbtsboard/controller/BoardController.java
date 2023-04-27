@@ -72,22 +72,29 @@ public class BoardController {
 		
 		int checkIdPwFlag = dao.checkIdPwDao(mid, mpw);
 		
-		model.addAttribute("checkIdPwFlag", checkIdPwFlag);
+		model.addAttribute("checkIdPwFlag", checkIdPwFlag);		
 		
-		if(checkIdPwFlag == 1) {	// 로그인 성공
-//			HttpSession session = request.getSession();	// 컨트롤러에서 세션 객체 가져오기
-			session.setAttribute("memberId", mid);
+		
+		if(checkIdPwFlag == 1) { //로그인 성공
+//			HttpSession session = request.getSession();	// 컨트롤러에서 세션객체 가져오기
+			session.setAttribute("sessionId", mid);
+			model.addAttribute("memberId", mid);
 		}
-		
 		return "loginOk";
+		
 	}
 	
 	@RequestMapping(value = "/logout")
 	public String logout(HttpSession session) {
 		
-		session.invalidate(); // 모든 세션 삭제
+		session.invalidate(); //모든 세션 삭제
 		
 		return "login";
+	}
+	
+	@RequestMapping(value = "write_form")
+	public String write_form() {
+		return "writeForm";
 	}
 	
 }

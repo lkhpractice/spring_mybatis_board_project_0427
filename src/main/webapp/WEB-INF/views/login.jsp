@@ -11,7 +11,7 @@
 	<hr>
 	<form action="loginOk" method="post">
 		아이디 : <input type="text" name="mid" size="60"><br><br>
-		비밀번호 : <input type="password" name="mpw" size="60">
+		비밀번호 : <input type="password" name="mpw" size="60"><br><br>
 		<input type="submit" value="로그인">
 	</form>
 </body>
