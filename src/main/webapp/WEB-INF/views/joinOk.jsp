@@ -28,5 +28,6 @@
 
 	${memberName }님 회원 가입을 축하드립니다.<br>
 	게시판에 열심히 글을 써 주세요!!
+	<a href="login" >로그인 바로가기</a>
 </body>
 </html>
