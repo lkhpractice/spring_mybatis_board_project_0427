@@ -28,8 +28,24 @@
 		INSERT INTO	freeboard(fnum, fid, fname, ftitle, fcontent, fhit) VALUES(myboard_seq.nextval, #{param1}, #{param2}, #{param3}, #{param4}, 0)
 	</insert>
 	
-	<select id="listDao" resultType="com.lkhparctice.mbtsboard.dto.FreeBoardDto">
+	<select id="listDao" resultType="com.lkhpractice.mbtsboard.dto.FreeBoardDto">
 		SELECT * FROM freeboard ORDER BY fnum DESC
 	</select>
-
+	
+	<select id="totalBoardDao" resultType="int">
+		SELECT count(*) FROM freeboard
+	</select>
+	
+	<select id="contentViewDao" resultType="com.lkhpractice.mbtsboard.dto.FreeBoardDto">
+		SELECT * FROM freeboard WHERE fnum=#{param1}
+	</select>
+	
+	<delete id="deleteDao">
+		DELETE FROM freeboard WHERE fnum=#{param1}
+	</delete>
+	
+	<update id="uphitDao">
+		UPDATE freeboard SET fhit=fhit+1 WHERE fnum=#{param1}
+	</update>
+	
 </mapper>
